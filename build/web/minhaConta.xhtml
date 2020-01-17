@@ -1,0 +1,223 @@
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="cabecalho">
+        <nav class="navbar navbar-default cabecalho col-lg-12 col-md-12 col-sm-12 col-xs-12 margem-zero">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href=""><p class="text-center link-navbar">Minha Conta</p></a>
+                    </li>
+
+                    <li>
+                        <a href=""><p class="text-center link-navbar">Sair</p></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </ui:define>
+
+    <ui:define name="conteudo">
+        <div class="row margem-zero" style="width: 100%">
+            <div class="bg-default float-left padding-zero" style="width: 48px">
+                <div class="panel-default nav-esquerda">
+                    <div class="left-icon">
+                        <a href="main.jsf" class="glyphicon glyphicon-cloud">
+
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="exibir-detalhes-conta">
+                <h:messages/>
+                <div class="detalhes-conta col-lg-5">
+                    <h:form styleClass="form-horizontal" id="form-conta">
+                        <p:growl id="growl" 
+                                 showDetail="true" sticky="true" 
+                                 autoUpdate="true"/>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <h:outputLabel styleClass="col-lg-4 control-label-left" 
+                                               value="Nome: " for="campo-nome"/>
+
+                                <div class="col-lg-8">
+                                    <h:inputText styleClass="form-control" 
+                                                 value="#{usuarioMB.usuario.nome}"
+                                                 id="campo-nome"
+                                                 required="true">
+                                    </h:inputText>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <h:outputLabel styleClass="col-lg-4 control-label-left" 
+                                               value="Sobrenome: " for="campo-sobrenome"/>
+
+                                <div class="col-lg-8">
+                                    <h:inputText styleClass="form-control" 
+                                                 value="#{usuarioMB.usuario.sobrenome}"
+                                                 id="campo-sobrenome"
+                                                 required="true">
+                                    </h:inputText>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <h:outputLabel styleClass="col-lg-4 control-label-left" 
+                                               value="Data de Cadastramento: " for="campo-dataNascimento"/>
+
+                                <div class="col-lg-8">
+                                    <h:outputText styleClass="form-control" id="campo-dataNascimento" 
+                                                  value="#{usuarioMB.usuario.dataCadastro}">
+                                        <f:convertDateTime type="date" locale="pt_BR"/>
+                                    </h:outputText>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4"></div>
+                                <div class="col-lg-8">
+                                    <h:commandButton styleClass="btn btn-success btn-lg" 
+                                                     value="Salvar"
+                                                     action="#{usuarioMB.alterarUsuario}">
+                                        <f:ajax execute="form-conta" render=":growl form-conta"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+
+                    </h:form>
+                </div>
+
+                <div class="senha-login col-lg-5">
+                    <h2>Mudar senha</h2>
+                    <h:form styleClass="form-horizontal" id="mudar-senha">
+
+
+                        <div class="form-group">
+                            <div class="row">
+                                <h:outputLabel styleClass="col-lg-4 control-label-left" 
+                                               value="Senha atual: " for="campo-senhaAtual"/>
+
+                                <div class="col-lg-8">
+                                    <h:inputSecret styleClass="form-control" 
+                                                   value="#{usuarioMB.senhaAtual}"
+                                                   id="campo-senhaAtual"
+                                                   required="true">
+                                    </h:inputSecret>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <h:outputLabel styleClass="col-lg-4 control-label-left" 
+                                               value="Nova senha: " for="campo-novaSenha"/>
+
+                                <div class="col-lg-8">
+                                    <h:inputSecret styleClass="form-control" 
+                                                   value="#{usuarioMB.novaSenha}"
+                                                   id="campo-novaSenha"
+                                                   required="true">
+                                    </h:inputSecret>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <h:outputLabel styleClass="col-lg-4 control-label-left" 
+                                               value="Confirme a nova senha: " for="campo-confirmarNovaSenha"/>
+
+                                <div class="col-lg-8">
+                                    <h:inputSecret styleClass="form-control" 
+                                                   value="#{usuarioMB.senhaComfirmacao}"
+                                                   id="campo-confirmarNovaSenha"
+                                                   required="true">
+                                    </h:inputSecret>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4"></div>
+                                <div class="col-lg-8">
+                                    <h:commandButton styleClass="btn btn-success btn-lg" 
+                                                     value="Salvar"
+                                                     action="#{usuarioMB.verificarSenha}">
+                                        <f:ajax execute="mudar-senha" render=":growl mudar-senha"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <hr/>
+
+                    <h:form styleClass="form-horizontal" id="mudar-email">
+
+                        <h2>Mudar E-mail</h2>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <h:outputLabel styleClass="col-lg-4 control-label-left" 
+                                               value="Email atual: " for="campo-emailAtual"/>
+
+                                <div class="col-lg-8">
+                                    <h:outputText styleClass="form-control" 
+                                                  value="#{usuarioMB.usuario.email}"
+                                                  id="campo-emailAtual">
+                                    </h:outputText>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <h:outputLabel styleClass="col-lg-4 control-label-left" 
+                                               value="Novo Email: " for="campo-novoEmail"/>
+
+                                <div class="col-lg-8">
+                                    <h:inputText styleClass="form-control" 
+                                                 value="#{usuarioMB.novoEmail}"
+                                                 id="campo-novoEmail"
+                                                 a:type="email"
+                                                 required="true">
+                                    </h:inputText>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4"></div>
+                                <div class="col-lg-8">
+                                    <h:commandButton styleClass="btn btn-success btn-lg" 
+                                                     value="Salvar"
+                                                     action="#{usuarioMB.verificarEmail}">
+                                        <f:ajax execute="mudar-email" render=":growl mudar-email"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,109 @@
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <ui:define name="cabecalho">
+        <nav class="navbar navbar-default cabecalho col-lg-12 col-md-12 col-sm-12 col-xs-12 margem-zero" style="padding-left: 0">
+            <div class="container-fluid" style="padding-left: 0">
+                <div class="brand">
+                    <span>Transferências</span>
+                </div>
+                
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="minhaConta.jsf"><p class="text-center link-navbar">Minha Conta</p></a>
+                    </li>
+
+                    <li>
+                        <a href=""><p class="text-center link-navbar">Sair</p></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </ui:define>
+    
+    <ui:define name="conteudo">
+        <div class="row margem-zero" style="width: 100%">
+            <div class="bg-default float-left padding-zero" style="width: 48px">
+                <div class="panel-default nav-esquerda">
+                    <div class="left-icon">
+                        <a href="main.jsf" class="glyphicon glyphicon-cloud">
+                            
+                        </a>
+                    </div>
+                    <div class="left-icon-bottom">
+                        <div class="left-icon" style="margin-bottom: 50px">
+                            <a class="glyphicon glyphicon-trash">
+
+                            </a>
+                        </div>
+
+                        <div class="left-icon">
+                            <a href="transferencia.jsf" class="glyphicon glyphicon-transfer">
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-header col-lg-10">
+                <h:form id="form-header">
+                    <div class="right-header-buttons">
+                        <div class="button">
+                            <i class="glyphicon glyphicon-remove small-icon"></i>
+                            <span>Limpar itens completos</span>
+                        </div>
+
+                        <div class="button">
+                            <i class="glyphicon glyphicon-remove small-icon"></i>
+                            <span>Limpar todas as transferências</span>
+                        </div>
+
+                        <div class="button">
+                            <i class="glyphicon glyphicon-pause small-icon"></i>
+                            <span>Pausar todas as transferências</span>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+            
+            <div class="transferencias-grid-view col-lg-11">
+                <h:dataTable styleClass="table table-striped">
+                    <h:column>
+                        <f:facet name="header">
+                            <div style="width: 360px">Nome</div>
+                        </f:facet>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <div style="width: 288px">Tipo</div>
+                        </f:facet>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <div style="width: 96px">Tamanho</div>
+                        </f:facet>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <div style="width: 192px">Veloc/Tempo estimado</div>
+                        </f:facet>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">
+                            <div style="width: 150px">Status</div>
+                        </f:facet>
+                    </h:column>
+                </h:dataTable>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

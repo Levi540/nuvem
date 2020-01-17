@@ -1,0 +1,79 @@
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="cabecalho">
+        <div class="page-header cabecalho">
+        </div>
+    </ui:define>
+
+
+
+    <ui:define name="conteudo">
+        <div class="panel panel-default col-lg-4 col-sm-8 col-md-5 col-lg-offset-4 col-sm-offset-2 col-md-offset-4 margem-login">
+            <div class="panel-body">
+                <h:form class="form-horizontal" id="form-login">
+                    <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-sm-offset-1 col-lg-offset-1">
+                                <h:outputLabel value="Login: " for="imput-login"/>
+                                <h:inputText class="form-control" 
+                                             id="imput-login" 
+                                             a:type="email" 
+                                             value="#{usuarioMB.usuario.email}" 
+                                             required="true"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-sm-offset-1 col-lg-offset-1">
+                                <h:outputLabel value="Senha: " for="imput-senha"/>
+                                <h:inputSecret class="form-control" 
+                                               id="imput-senha" 
+                                               value="#{usuarioMB.usuario.senha}" 
+                                               required="true"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-sm-offset-1 col-lg-offset-1">
+                                <h:commandButton styleClass="btn btn-primary btn-lg btn-block" 
+                                                 value="Entrar" 
+                                                 action="#{usuarioMB.validarLogin}">
+                                
+                                    <f:setPropertyActionListener value="#{usuarioMB.usuario}"
+                                                                 target="#{arquivoMB.arquivo.usuario}"/>
+                                </h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </h:form>
+            </div>
+
+            <div class="panel-footer">
+
+                <p class="text-center" style="color: black">OU</p>
+
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-sm-offset-1 col-lg-offset-1">
+                        <h:button styleClass="btn btn-success btn-lg btn-block" 
+                                  value="Criar conta" outcome="cadsConta.xhtml"/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

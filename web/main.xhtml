@@ -1,0 +1,180 @@
+<ui:composition template="template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="cabecalho">
+        <nav class="navbar navbar-default cabecalho col-lg-12 col-md-12 col-sm-12 col-xs-12 margem-zero">
+            <div class="container-fluid">
+                <div class="navbar-brand padding-zero">
+                    <h:button value="Nuvem de arquivos" class="btn btn-primary navbar-btn"/>
+                </div>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="minhaConta.jsf">
+                            <p class="text-center link-navbar">
+                                <h:outputText value="#{usuarioMB.usuario.nome}"/>
+                            </p>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="minhaConta.jsf"><p class="text-center link-navbar">Minha Conta</p></a>
+                    </li>
+
+                    <li>
+                        <a href="index.jsf"><p class="text-center link-navbar">Sair</p></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </ui:define>
+
+    <ui:define name="conteudo">
+        <div class="row margem-zero" style="width: 100%">
+            <div class="bg-default col-lg-2 col-md-2 col-sm-2 col-xs-2 float-left padding-zero">
+                <div class="panel-default navbar-esquerda">
+
+                </div>
+            </div>
+
+            <div class="right-header col-lg-10">
+
+                <div class="right-header-buttons">
+                    <div class="button">
+                        <h:form id="form-upload-folder" enctype="multipart/form-data">
+                            <p:growl id="growl" showDetail="true" sticky="false" autoUpdate="true" life="5000"/>
+
+                            <p:commandLink id="uploadfolder-link" type="button">
+                                <i class="glyphicon glyphicon-level-up small-icon"></i>
+                                <span>Carregar Pasta</span>
+                            </p:commandLink>
+                            <p:overlayPanel id="panel-upload" for="uploadfolder-link" hideEffect="fade" 
+                                            hideEvent="mousedown" showCloseIcon="true">
+                                <h:inputFile id="upload-folder" 
+                                             value="#{arquivoMB.file}" 
+                                             a:directory="true" 
+                                             a:webkitdirectory="true">
+
+                                </h:inputFile>
+                                <h:commandButton value="Enviar" action="#{arquivoMB.verificarPastaExiste}">
+
+                                </h:commandButton>
+                            </p:overlayPanel>
+
+                        </h:form>
+
+                    </div>
+
+
+                    <div class="button ">
+                        <h:form id="form-upload-files" enctype="multipart/form-data">
+
+                            <p:commandLink id="upload-link" type="button">
+                                <i class="glyphicon glyphicon-open-file small-icon"></i>
+                                <span>Carregar Arquivo</span>
+                            </p:commandLink>
+                            <p:overlayPanel id="panel" for="upload-link" hideEffect="fade" 
+                                            hideEvent="mousedown" showCloseIcon="true">
+                                <h:inputFile id="upload" value="#{arquivoMB.file}" 
+                                             a:multiple="true" required="true">
+
+                                </h:inputFile>
+                                <h:commandButton value="Enviar" action="#{arquivoMB.submit}">
+                                    <f:setPropertyActionListener id="property" value="#{usuarioMB.usuario}"
+                                                                 target="#{arquivoMB.arquivo.usuario}"/>
+                                </h:commandButton>
+                            </p:overlayPanel>
+
+                        </h:form>
+                    </div>
+
+
+                    <div class="button">
+                        <h:form>
+                            <p:commandLink id="nova-pasta" type="button" immediate="true">
+                                <i class="glyphicon glyphicon-plus small-icon"></i>
+                                <span>Nova Pasta</span>
+                            </p:commandLink>
+                            <p:overlayPanel id="panel-nova-pasta" for="nova-pasta" hideEffect="fade"
+                                            hideEvent="mousedown" showCloseIcon="true">
+                                <p:outputLabel value="Nome: " for="nome-pasta"/>
+                                <p:inputText value="#{arquivoMB.pastaNova.nome}" 
+                                             id="nome-pasta" 
+                                             required="true"/>
+                                <p:commandButton value="Criar Pasta" action="#{arquivoMB.novaPasta}" 
+                                                 update="@all"/>
+                            </p:overlayPanel>
+                        </h:form>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="grid" class="files-grid-view col-lg-10">
+                <h:form id="form">
+                    <p:dataTable id="tabela-arquivos" 
+                                 var="arquivo" 
+                                 value="#{arquivoMB.arquivos}" 
+                                 selectionMode="single" 
+                                 selection="#{arquivoMB.selecionado}" 
+                                 rowKey="#{arquivo.id}"
+                                 emptyMessage="Vazio">
+
+                        <f:facet name="header">
+                            <p:commandButton value="Download" ajax="false" 
+
+                                             icon="ui-icon-arrowthick-1-s">
+
+                                <p:fileDownload value="#{arquivoMB.fileDownload}"/>
+                            </p:commandButton>
+                        </f:facet>
+
+                        <p:column headerText="Nome" style="width: 502px">
+                            <h:outputText value="#{arquivo.nome}"/>
+                        </p:column>
+
+                        <p:column headerText="Tamanho" style="width: 100px">
+                            <h:outputText value="#{arquivo.tamanho}">
+
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Tipo" style="width: 130px">
+                            <h:outputText value="#{arquivo.tipo}"/>
+                        </p:column>
+
+                        <p:column headerText="Data de criação" style="width: 120px">
+                            <h:outputText value="#{arquivo.dataCriacao}">
+                                <f:convertDateTime locale="pt_BR" type="both"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <h:outputText value="#{arquivoMB.diretorioAtual}" style="color: transparent"/>
+                        </f:facet>
+
+                    </p:dataTable>
+
+                    <p:contextMenu for="tabela-arquivos">
+                        <p:menuitem value="Abrir pasta" 
+                                    icon="ui-icon-folder-open"
+                                    actionListener="#{arquivoMB.carregarTabela(false)}" 
+                                    update=":form:tabela-arquivos">
+                        </p:menuitem>
+
+                        <p:menuitem value="Delete" 
+                                    icon="ui-icon-close"
+                                    actionListener="#{arquivoMB.deletar}" 
+                                    update=":form:tabela-arquivos"/>
+                    </p:contextMenu>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>
